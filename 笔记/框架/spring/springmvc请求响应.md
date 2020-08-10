@@ -20,7 +20,7 @@ controller即控制器，servlet等，处理请求
 
 表现层------>响应结果------>浏览器
 
-
+<font color=red>springmvc的核心即请求和响应</font>
 
 ### springmvc开发流程：
 
@@ -136,6 +136,7 @@ controller即控制器，servlet等，处理请求
        </init-param>
        <!-- 配置 servlet 的对象的创建时间点：应用加载时创建。
          取值只能是非 0 正整数，表示启动顺序 -->
+         <!-- 启动服务器，创建该-->
        <load-on-startup>1</load-on-startup>
      </servlet>
      <servlet-mapping>
@@ -185,7 +186,7 @@ controller即控制器，servlet等，处理请求
 
 ### mvc:annotation-driven说明：
 
-在 SpringMVC 的各个组件中，处理器映射器、处理器适配器、视图解析器称为SpringMVC 的三大组件。使用<mvc:annotation-driven> 自动加载 RequestMappingHandlerMapping(处理映射器)和 RequestMappingHandlerAdapter ( 处 理 适 配 器 ) ， 可 用 在 SpringMVC.xml 配 置 文 件 中 使 用 <mvc:annotation-driven>替代注解处理器和适 配器的配置。
+在 SpringMVC 的各个组件中，处理器映射器、处理器适配器、视图解析器称为SpringMVC 的三大组件。使用<mvc:annotation-driven> 自动加载 RequestMappingHandlerMapping(处理映射器)和 RequestMappingHandlerAdapter ( 处 理 适 配 器 ) ， 可 用 在 SpringMVC.xml 配 置 文 件 中 使 用 <mvc:annotation-driven>替代注解处理器和适配器的配置。
 
 ### RequestMapping注解：
 
@@ -742,6 +743,78 @@ controller即控制器，servlet等，处理请求
 
      
 
+   - 使用实例：
+
+     - jsp页面
+
+       ```
+     <!-- SessionAttribute 注解的使用 -->
+       <a href="SessionAttribute/testPut">存入 SessionAttribute</a> <hr/>
+       <a href="SessionAttribute/testGet">取出 SessionAttribute</a> <hr/>
+       <a href="SessionAttribute/testClean">清除 SessionAttribute</a>
+       ```
+       
+     - 控制器Java代码
+     
+       ```
+       package club.banyuan.controller;
+       
+       import org.springframework.stereotype.Controller;
+       import org.springframework.ui.Model;
+       import org.springframework.ui.ModelMap;
+       import org.springframework.web.bind.annotation.RequestMapping;
+       import org.springframework.web.bind.annotation.SessionAttributes;
+       import org.springframework.web.bind.support.SessionStatus;
+       
+       /**
+        * @author :yu
+        * @description : TODO
+        * @date :2020/8/6 16:41
+        */
+       @Controller
+       @RequestMapping("/SessionAttribute")
+       @SessionAttributes(value = {"username", "password"}, types = {Integer.class})
+       public class SessionAttributeController {
+       
+         /**
+          * 把数据存入 SessionAttribute
+          *
+          * @param model
+          * @return Model 是 spring 提供的一个接口，该接口有一个实现类 ExtendedModelMap 该类继承了 ModelMap，而 ModelMap 就是
+          * LinkedHashMap 子类
+          */
+         @RequestMapping("/testPut")
+         public String testPut(Model model) {
+           model.addAttribute("username", "泰斯特");
+           model.addAttribute("password", "123456");
+           model.addAttribute("age", 31);
+       //跳转之前将数据保存到 username、password和age中，
+       // 因为注解@SessionAttribute中有这几个参数
+           return "hello";
+         }
+       
+         @RequestMapping("/testGet")
+         public String testGet(ModelMap model) {
+           System.out.println(model.get("username") + ";" +
+               model.get("password") + ";" + model.get("age"));
+           return "hello";
+         }
+       
+         @RequestMapping("/testClean")
+         public String complete(SessionStatus sessionStatus) {
+           sessionStatus.setComplete();
+           return "hello";
+         }
+       }
+       
+       
+       
+       ```
+     
+       
+     
+     
+     
      
 
 ​     
