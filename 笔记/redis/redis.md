@@ -33,6 +33,14 @@
 - 安装：sudo make install。成功后提示: It's a good idea to run 'make test'!
 - 重开一个终端窗口运行redis-server命令
 
+### mac终端使用redis：
+
+1. cd usr/local/redis
+2. 启动redis服务端：redis-server
+3. 重新开一个窗口，输入命令：redis-cli
+4. 退出服务端命令：exit
+5. 关闭redis服务器命令：redis-cli shutdown
+
 ### redis的命令操作：
 
 1. redis的数据结构：redis 存储的是:key,value 格式的数据，其中 key 都是字符串，value有5种不同的数据结构
@@ -145,4 +153,136 @@
 
        日志记录的方式，可以记录每一条命令的操作。可以每一次命令操作后，持久化数据
 
+   ### Java客户端jedis：
+   
+   jedis是一款java操纵redis数据库的工具
+   
+   ```
+   package club.banyuan;
+   
+   import redis.clients.jedis.Jedis;
+   
+   import java.util.List;
+   import java.util.Map;
+   import java.util.Set;
+   
+   public class TestMain1 {
+   
+     public static void main(String[] args) {
+       Jedis jedis = new Jedis("localhost", 6379);
+       jedis.set("username", "haha");
+   
+       System.out.println("--------String-----------");
+       String username = jedis.get("username");
+       System.out.println(username);
+   
+       jedis.setex("activecode", 20, "hehe");
+   
+       System.out.println("-------hash----------");
+       jedis.hset("user", "name", "lisi");
+       jedis.hset("user", "age", "18");
+       jedis.hset("user", "gender", "female");
+   
+       String name = jedis.hget("user", "name");
+       System.out.println(name);
+   
+       Map<String, String> map = jedis.hgetAll("user");
+       for (String field : map.keySet()) {
+         System.out.println(field + "   :   " + map.get(field));
+       }
+   
+       jedis.close();
+   
+       System.out.println("----------list-----------");
+       jedis.lpush("mylist", "a", "b", "c");
+       jedis.rpush("mylist", "a", "b", "c");
+   
+       List<String> stringList = jedis.lrange("mylist", 0, -1);
+       for (int i = 0; i < stringList.size(); i++) {
+         System.out.print(stringList.get(i) + "\t");
+       }
+   
+       System.out.println("\nlpop：" + jedis.lpop("mylist"));
+       System.out.println("rpop：" + jedis.rpop("mylist"));
+   
+       stringList = jedis.lrange("mylist", 0, -1);
+       for (int i = 0; i < stringList.size(); i++) {
+         System.out.print(stringList.get(i) + "\t");
+       }
+   
+       System.out.println("\n-----------Set-------------");
+       jedis.sadd("myset", "java", "php", "cpp");
+       Set<String> set = jedis.smembers("myset");
+       System.out.println(set);
+   
+       System.out.println("-----------SortedSet------------");
+       jedis.zadd("mysortedset", 20, "zhangsan");
+       jedis.zadd("mysortedset", 5, "lisi");
+       jedis.zadd("mysortedset", 30, "wangwu");
+   
+       Set<String> sortedSet = jedis.zrange("mysortedset", 0, -1);
+       System.out.println(sortedSet);
+   
+       jedis.del("mylist");
+     }
+   }
+   
+   ```
+   
+   ### springboot集成redis
+   
+   1. 添加redis的起步依赖
+   
+      ```
+      <!-- 配置使用 redis 启动器 --> 
+      <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-redis</artifactId> 
+      </dependency>
+      ```
+   
+   2. 配置redis的连接信息
+   
+      ```
+      #Redis 
+      spring.redis.host=127.0.0.1 
+      spring.redis.port=6379
+      ```
+   
+   3. 注入 RedisTemplate 测试 redis 操作
+   
+      ```
+      @RunWith(SpringRunner.class)
+      @SpringBootTest(classes = SpringbootJpaApplication.class) 
+      public class RedisTest {
+      @Autowired
+      private UserRepository userRepository;
+      @Autowired
+      private RedisTemplate<String, String> redisTemplate;
+      @Test
+      public void test() throws JsonProcessingException {
+      //从 redis 缓存中获得指定的数据
+      String userListData = redisTemplate.boundValueOps("user.findAll").get(); 
+      //如果 redis 中没有数据的话
+      if(null==userListData){
+      
+      //查询数据库获得数据
+      List<User> all = userRepository.findAll();
+      //转换成 json 格式字符串
+      ObjectMapper om = new ObjectMapper();
+      userListData = om.writeValueAsString(all);
+      //将数据存储到 redis 中，下次在查询直接从 redis 中获得数据，不用在查询数据库
+      redisTemplate.boundValueOps("user.findAll").set(userListData);
+      System.out.println("=============== 从 数 据 库 获 得 数 据 ===============");
+      }else{
+      System.out.println("=============== 从 redis 缓 存 中 获 得 数 据
+      ==============="); }
+      System.out.println(userListData); }
+      }
+      ```
+   
+      
+   
+   1. 
+   
    
