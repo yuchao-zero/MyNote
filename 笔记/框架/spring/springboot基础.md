@@ -109,7 +109,7 @@
 
 ### springboot的配置文件
 
-1. SpringBoot 默认会从 Resources 目录下加载 application.properties 或 application.yml (application.yaml)文件
+1.  <font color=red>SpringBoot 默认会从 Resources 目录下加载 application.properties 或 application.yml (application.yaml)文件</fon>
 2. YML 文件格式是 YAML (YAML Aint Markup Language)编写的文件格式，YAML 是一种 直观的能够被电脑识别的的数 据数据序列化格式，并且容易被人类阅读，容易和脚本语言 交互的，可以被支持 YAML 库的不同的编程语言程序导 入，比如: C/C++, Ruby, Python, Java, Perl, C#, PHP 等。YML 文件是以数据为核心的，比传统的 xml 方式更加简 洁。 YML 文件的扩展名可以使用.yml 或者.yaml。
 
 ### 配置文件与配置类的属性映射方式
@@ -225,6 +225,10 @@
 
 9. 编写表现层控制器代码
 
-   
+### 补充：
+
+1. springboot自动集成了Tomcat依赖，默认端口号8080
+
+​    
 
 ​      

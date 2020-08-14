@@ -226,6 +226,8 @@
 
 3. 编写web.xml
 
+   在 main 下创建 webapp 文件夹在 webapp 下创建 WEB-INF在WEB-INF下添加 web.xml
+
    ```
    <!--  中文乱码过滤器-->
      <filter>

@@ -40,6 +40,7 @@
          <groupId>org.springframework.boot</groupId>
          <artifactId>spring-boot-starter-web</artifactId>
        </dependency>
+    <!-- 无需配置Tomcat依赖，springboot框架自动集成-->   
        <dependency>
          <groupId>org.springframework.boot</groupId>
          <artifactId>spring-boot-starter-tomcat</artifactId>

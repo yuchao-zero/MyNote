@@ -6,9 +6,16 @@
 
 2. Thymeleaf 的主要作用是把 model 中的数据渲染到 html 中。
 
-3. Thymeleaf 中所有的表达式都需要写在指令中，指令是 HTML5 中的自定义属性，在 Thymeleaf 中所有指令都是以 th:开头。因为表达式${user.name}是写在自定义属性中，因此在静态环境 下，表达式的内容会被当做是普通字符串，浏览器会自动忽略这些指令，这样就不会报错了
+3. Thymeleaf 默认会开启页面缓存，提高页面并发能力。但会导致我们修改页面不会立即被展现，因此我们关闭缓存:
 
-4. th:text 的含义就是替换所在标签 中的文本内容，于是 user.name 的值就替代了 span 中默认的请登录
+   ```
+   # 关闭 Thymeleaf 的缓存
+   spring.thymeleaf.cache=false
+   ```
+
+4. Thymeleaf 中所有的表达式都需要写在指令中，指令是 HTML5 中的自定义属性，在 Thymeleaf 中所有指令都是以 th:开头。因为表达式${user.name}是写在自定义属性中，因此在静态环境 下，表达式的内容会被当做是普通字符串，浏览器会自动忽略这些指令，这样就不会报错了
+
+5. th:text 的含义就是替换所在标签 中的文本内容，于是 user.name 的值就替代了 span 中默认的请登录
 
    ```
    <!DOCTYPE html>
@@ -27,9 +34,9 @@
    </html>
    ```
 
-5. 如果不支持这种`th:`的命名空间写法，那么可以把`th:text`换成 `data-th-text`，Thymeleaf 也 可以兼容。
+6. 如果不支持这种`th:`的命名空间写法，那么可以把`th:text`换成 `data-th-text`，Thymeleaf 也 可以兼容。
 
-6. <font color=red>需要注意:${}内部的是通过 OGNL 表达式引擎解析的，外部的才是通过 Thymeleaf 的引擎 解析，因此运算符尽量放在${}外进行。</font>
+7. <font color=red>需要注意:${}内部的是通过 OGNL 表达式引擎解析的，外部的才是通过 Thymeleaf 的引擎 解析，因此运算符尽量放在${}外进行。</font>
 
 ### **ognl** 表达式的语法糖：
 
