@@ -9,3 +9,7 @@
    ![image-20200822161455242](/Users/yuchao/Library/Application Support/typora-user-images/image-20200822161455242.png)
 
    
+
+解决git add 下中文显示为数字
+
+git config --global core.quotepath false
