@@ -13,3 +13,19 @@
    ```
 
 4. 终端键入source ~/.bash_profile
+
+
+
+
+
+#### idea配置：
+
+1. maven home directory:/Users/yuchao/Library/apache-maven-3.6.3
+2. User setting files:/Users/yuchao/Library/apache-maven-3.6.3/conf/settings.xml
+3. local repository:默认
+
+
+
+#### idea下maven项目报错：Cannot resolve org.springframework:spring-jdbc:5.2.7.RELEASE
+
+解决方案：更改mavenidea配置，设置成以上内容

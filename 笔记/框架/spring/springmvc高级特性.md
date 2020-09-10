@@ -532,8 +532,10 @@
 
 3. 多个拦截器的执行顺序
 
-   ![image-20200809212220850](/Users/edz/Library/Application Support/typora-user-images/image-20200809212220850.png)
-
-
+   ![image-20200825150950490](/Users/yuchao/Library/Application Support/typora-user-images/image-20200825150950490.png)
+   
+   ![image-20200825151041251](/Users/yuchao/Library/Application Support/typora-user-images/image-20200825151041251.png)
+   
+   
 
   
